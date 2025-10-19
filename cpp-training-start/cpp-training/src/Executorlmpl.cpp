@@ -8,6 +8,9 @@ namespace adas
 
     Executorlmpl::Executorlmpl(const Pose& pose) noexcept
     {
+        this -> pose.x = pose.x;
+        this -> pose.y = pose.y;
+        this -> pose.heading = pose.heading;
     }
 
     void Executorlmpl::Execute(const std::string& commands)noexcept

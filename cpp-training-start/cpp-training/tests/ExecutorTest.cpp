@@ -16,4 +16,10 @@ namespace adas
        ASSERT_EQ(target,executor->Query());
        //Arrange-Act-Assert
     }
+    TEST(ExecutorTest,should_return_default_pose_when_without_init_and_command)
+    {
+       std::unique_ptr<Executor>executor(Executor::NewExecutor());
+       const Pose target({0,0,'N'});
+       ASSERT_EQ(target,executor->Query());
+    }
 }
