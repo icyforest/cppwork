@@ -15,6 +15,25 @@ namespace adas
 
     void Executorlmpl::Execute(const std::string& commands)noexcept
     {
+        if(commands == "M")
+        {
+            if(this -> pose.heading == 'E')
+            {
+                this -> pose.x ++;
+            }
+            if(this -> pose.heading == 'W')
+            {
+                this -> pose.x --;
+            }
+            if(this -> pose.heading == 'N')
+            {
+                this -> pose.y ++;
+            }
+            if(this -> pose.heading == 'S')
+            {
+                this -> pose.y --;
+            }
+        }
     }
 
     Pose Executorlmpl::Query()const noexcept
