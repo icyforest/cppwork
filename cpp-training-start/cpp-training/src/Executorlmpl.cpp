@@ -15,61 +15,64 @@ namespace adas
 
     void Executorlmpl::Execute(const std::string& commands)noexcept
     {
-        if(commands == "M")
+        for(const auto cmd : commands)
         {
-            if(this -> pose.heading == 'E')
+            if(cmd == 'M')
             {
-                this -> pose.x ++;
+                if(this -> pose.heading == 'E')
+                {
+                    this -> pose.x ++;
+                }
+                else if(this -> pose.heading == 'W')
+                {
+                    this -> pose.x --;
+                }
+                else if(this -> pose.heading == 'N')
+                {
+                    this -> pose.y ++;
+                }
+                else if(this -> pose.heading == 'S')
+                {
+                    this -> pose.y --;
+                }
             }
-            if(this -> pose.heading == 'W')
+            else if(cmd == 'L')
             {
-                this -> pose.x --;
+                if(this -> pose.heading == 'E')
+                {
+                    this -> pose.heading = 'N';
+                }
+                else if(this -> pose.heading == 'W')
+                {
+                    this -> pose.heading = 'S';
+                }
+                else if(this -> pose.heading == 'N')
+                {
+                    this -> pose.heading = 'W';
+                }
+                else if(this -> pose.heading == 'S')
+                {
+                    this -> pose.heading = 'E';
+                }
             }
-            if(this -> pose.heading == 'N')
+            else if(cmd == 'R')
             {
-                this -> pose.y ++;
-            }
-            if(this -> pose.heading == 'S')
-            {
-                this -> pose.y --;
-            }
-        }
-        if(commands == "L")
-        {
-            if(this -> pose.heading == 'E')
-            {
-                this -> pose.heading = 'N';
-            }
-            else if(this -> pose.heading == 'W')
-            {
-                this -> pose.heading = 'S';
-            }
-            else if(this -> pose.heading == 'N')
-            {
-                this -> pose.heading = 'W';
-            }
-            else if(this -> pose.heading == 'S')
-            {
-                this -> pose.heading = 'E';
-            }
-        }
-        if(commands == "R")
-        {
-            if(this -> pose.heading == 'E')
-            {
-                this -> pose.heading = 'S';
-            }
-            else if(this -> pose.heading == 'W')
-            {
-                this -> pose.heading = 'N';
-            }
-            else if(this -> pose.heading == 'N')
-            {
-                this -> pose.heading = 'E';
-            }
-            else if(this -> pose.heading == 'S')
-            {
-                this -> pose.heading = 'W';
+                if(this -> pose.heading == 'E')
+                {
+                    this -> pose.heading = 'S';
+                }
+                else if(this -> pose.heading == 'W')
+                {
+                    this -> pose.heading = 'N';
+                }
+                else if(this -> pose.heading == 'N')
+                {
+                    this -> pose.heading = 'E';
+                }
+                else if(this -> pose.heading == 'S')
+                {
+                    this -> pose.heading = 'W';
+                }
             }
         }
     }
