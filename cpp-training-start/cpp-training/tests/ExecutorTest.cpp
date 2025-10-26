@@ -8,7 +8,7 @@ namespace adas
     {
         return std::tie(lhs.x,lhs.y,lhs.heading) == std::tie(rhs.x,rhs.y,rhs.heading);
     }
-
+    //originate
     TEST(ExecutorTest,should_return_init_pose_when_without_command)
     {
        std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'E'}));
@@ -16,7 +16,7 @@ namespace adas
        ASSERT_EQ(target,executor->Query());
        //Arrange-Act-Assert
     }
-
+    //default originate
     TEST(ExecutorTest,should_return_default_pose_when_without_init_and_command)
     {
        std::unique_ptr<Executor>executor(Executor::NewExecutor());
@@ -141,6 +141,126 @@ namespace adas
        executor->Execute("R");
 
        const Pose target({0,0,'W'});
+       ASSERT_EQ(target,executor->Query());
+    }
+    // go straight when is fast
+    TEST(ExecutorTest,should_return_x_plus_2_given_command_is_FM_and_facing_is_E)
+    {
+       std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'E'}));
+
+       executor->Execute("FM");
+
+       const Pose target({2,0,'E'});
+       ASSERT_EQ(target,executor->Query());
+    }
+
+    TEST(ExecutorTest,should_return_x_minus_2_given_command_is_FM_and_facing_is_W)
+    {
+       std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'W'}));
+
+       executor->Execute("FM");
+
+       const Pose target({-2,0,'W'});
+       ASSERT_EQ(target,executor->Query());
+    }
+
+    TEST(ExecutorTest,should_return_y_plus_2_given_command_is_FM_and_facing_is_N)
+    {
+       std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'N'}));
+
+       executor->Execute("FM");
+
+       const Pose target({0,2,'N'});
+       ASSERT_EQ(target,executor->Query());
+    }
+
+    TEST(ExecutorTest,should_return_y_minus_2_given_command_is_FM_and_facing_is_S)
+    {
+       std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'S'}));
+
+       executor->Execute("FM");
+
+       const Pose target({0,-2,'S'});
+       ASSERT_EQ(target,executor->Query());
+    }
+    //turn left
+    TEST(ExecutorTest,should_return_facing_N_and_x_plus_1_given_command_is_FL_and_facing_is_E)
+    {
+       std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'E'}));
+
+       executor->Execute("FL");
+
+       const Pose target({1,0,'N'});
+       ASSERT_EQ(target,executor->Query());
+    }
+
+    TEST(ExecutorTest,should_return_facing_S_and_x_minus_1_given_command_is_FL_and_facing_is_W)
+    {
+       std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'W'}));
+
+       executor->Execute("FL");
+
+       const Pose target({-1,0,'S'});
+       ASSERT_EQ(target,executor->Query());
+    }
+
+    TEST(ExecutorTest,should_return_facing_W_and_y_plus_1_given_command_is_FL_and_facing_is_N)
+    {
+       std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'N'}));
+
+       executor->Execute("FL");
+
+       const Pose target({0,1,'W'});
+       ASSERT_EQ(target,executor->Query());
+    }
+
+    TEST(ExecutorTest,should_return_facing_E_and_y_minus_1_given_command_is_FL_and_facing_is_S)
+    {
+       std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'S'}));
+
+       executor->Execute("FL");
+
+       const Pose target({0,-1,'E'});
+       ASSERT_EQ(target,executor->Query());
+    }
+    //turn right
+    TEST(ExecutorTest,should_return_facing_S_and_x_plus_1_given_command_is_FR_and_facing_is_E)
+    {
+       std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'E'}));
+
+       executor->Execute("FR");
+
+       const Pose target({1,0,'S'});
+       ASSERT_EQ(target,executor->Query());
+    }
+
+    TEST(ExecutorTest,should_return_facing_N_and_x_minus_1_given_command_is_FR_and_facing_is_W)
+    {
+       std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'W'}));
+
+       executor->Execute("FR");
+
+       const Pose target({-1,0,'N'});
+       ASSERT_EQ(target,executor->Query());
+    }
+
+    TEST(ExecutorTest,should_return_facing_E_and_y_plus_1_given_command_is_FR_and_facing_is_N)
+    {
+       std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'N'}));
+
+       executor->Execute("FR");
+
+       const Pose target({0,1,'E'});
+       ASSERT_EQ(target,executor->Query());
+    }
+
+    TEST(ExecutorTest,should_return_facing_W_and_y_minus_1_given_command_is_FR_and_facing_is_S)
+    {
+       std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'S'}));
+
+       executor->Execute("FR");
+
+       const Pose target({0,-1,'W'});
        ASSERT_EQ(target,executor->Query());
     }
     

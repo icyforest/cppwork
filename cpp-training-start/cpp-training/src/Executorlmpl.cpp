@@ -11,17 +11,41 @@ namespace adas
         this -> pose.x = pose.x;
         this -> pose.y = pose.y;
         this -> pose.heading = pose.heading;
+        this -> isfast = false;
     }
 
     void Executorlmpl::Execute(const std::string& commands)noexcept
     {
         for(const auto cmd : commands)
         {
+            if(cmd == 'F')
+            {
+                this -> isfast = true;
+            }
             if(cmd == 'M')
             {
+                if(isfast)
+                {    
+                    if(this -> pose.heading == 'E')
+                    {
+                        this -> pose.x += 1;
+                    }
+                    else if(this -> pose.heading == 'W')
+                    {
+                        this -> pose.x --;
+                    }
+                    else if(this -> pose.heading == 'N')
+                    {
+                        this -> pose.y ++;
+                    }
+                    else if(this -> pose.heading == 'S')
+                    {
+                        this -> pose.y --;
+                    }
+                }
                 if(this -> pose.heading == 'E')
                 {
-                    this -> pose.x ++;
+                    this -> pose.x += 1;
                 }
                 else if(this -> pose.heading == 'W')
                 {
@@ -38,6 +62,25 @@ namespace adas
             }
             else if(cmd == 'L')
             {
+                if(isfast)
+                {    
+                    if(this -> pose.heading == 'E')
+                    {
+                        this -> pose.x += 1;
+                    }
+                    else if(this -> pose.heading == 'W')
+                    {
+                        this -> pose.x --;
+                    }
+                    else if(this -> pose.heading == 'N')
+                    {
+                        this -> pose.y ++;
+                    }
+                    else if(this -> pose.heading == 'S')
+                    {
+                        this -> pose.y --;
+                    }
+                }
                 if(this -> pose.heading == 'E')
                 {
                     this -> pose.heading = 'N';
@@ -57,6 +100,25 @@ namespace adas
             }
             else if(cmd == 'R')
             {
+                if(isfast)
+                {    
+                    if(this -> pose.heading == 'E')
+                    {
+                        this -> pose.x += 1;
+                    }
+                    else if(this -> pose.heading == 'W')
+                    {
+                        this -> pose.x --;
+                    }
+                    else if(this -> pose.heading == 'N')
+                    {
+                        this -> pose.y ++;
+                    }
+                    else if(this -> pose.heading == 'S')
+                    {
+                        this -> pose.y --;
+                    }
+                }
                 if(this -> pose.heading == 'E')
                 {
                     this -> pose.heading = 'S';

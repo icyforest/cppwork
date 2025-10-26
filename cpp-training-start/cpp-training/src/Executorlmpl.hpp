@@ -18,5 +18,6 @@ namespace adas
     
     private:
         Pose pose;
+        bool isfast;
     };
 }
