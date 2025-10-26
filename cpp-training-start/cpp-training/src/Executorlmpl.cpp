@@ -11,45 +11,34 @@ namespace adas
         this -> pose.x = pose.x;
         this -> pose.y = pose.y;
         this -> pose.heading = pose.heading;
-        this -> isfast = false;
+        this -> fast = false;
     }
 
     void Executorlmpl::Execute(const std::string& commands)noexcept
     {
         for(const auto cmd : commands)
         {
+            std::unique_ptr<ICommand> cmder;
             if(cmd == 'F')
             {
-                this -> isfast = true;
+                cmder = std::make_unique<FastCommand>();
             }
-            if(cmd == 'M')
+            else if(cmd == 'M')
             {
-                std::unique_ptr<MoveCommand> cmder = std::make_unique<MoveCommand>();
-                if(isfast)
-                {    
-                    cmder -> DoOperate(*this);
-                }
-                cmder -> DoOperate(*this);
+                cmder = std::make_unique<MoveCommand>();
             }
             else if(cmd == 'L')
             {
-                std::unique_ptr<MoveCommand> cmder1 = std::make_unique<MoveCommand>();
-                std::unique_ptr<TurnLeftCommand> cmder2 = std::make_unique<TurnLeftCommand>();
-                if(isfast)
-                {    
-                    cmder1 -> DoOperate(*this);
-                }
-                cmder2 -> DoOperate(*this);
+                cmder = std::make_unique<TurnLeftCommand>();
             }
             else if(cmd == 'R')
             {
-                std::unique_ptr<MoveCommand> cmder1 = std::make_unique<MoveCommand>();
-                std::unique_ptr<TurnRightCommand> cmder2 = std::make_unique<TurnRightCommand>();
-                if(isfast)
-                {    
-                    cmder1 -> DoOperate(*this);
-                }
-                cmder2 -> DoOperate(*this);
+                cmder = std::make_unique<TurnRightCommand>();
+            }
+
+            if(cmder)
+            {
+                cmder -> DoOperate(*this);
             }
         }
     }
@@ -59,63 +48,68 @@ namespace adas
         return pose;
     }
 
-    void Executorlmpl::MoveCommand::executorMove(Executorlmpl & executor)noexcept
+    void Executorlmpl::Move(void)noexcept
     {
-        if(executor.pose.heading == 'E')
+        if(this -> pose.heading == 'E')
         {
-             executor.pose.x += 1;
+             this -> pose.x += 1;
         }
-        else if(executor.pose.heading == 'W')
+        else if(pose.heading == 'W')
         {
-            executor.pose.x --;
+            this -> pose.x --;
         }
-        else if(executor.pose.heading == 'N')
+        else if(this -> pose.heading == 'N')
         {
-            executor.pose.y ++;
+            this -> pose.y ++;
         }
-        else if(executor.pose.heading == 'S')
+        else if(this -> pose.heading == 'S')
         {
-            executor.pose.y --;
+            this -> pose.y --;
         }
     }
 
-    void Executorlmpl::TurnLeftCommand::executorTurnLeft(Executorlmpl & executor)noexcept
+    void Executorlmpl::TurnLeft(void)noexcept
     {
-        if(executor.pose.heading == 'E')
+        if(this -> pose.heading == 'E')
         {
-            executor.pose.heading = 'N';
+            this -> pose.heading = 'N';
         }
-        else if(executor.pose.heading == 'W')
+        else if(this -> pose.heading == 'W')
         {
-            executor.pose.heading = 'S';
+            this -> pose.heading = 'S';
         }
-        else if(executor.pose.heading == 'N')
+        else if(this -> pose.heading == 'N')
         {
-            executor.pose.heading = 'W';
+            this -> pose.heading = 'W';
         }
-        else if(executor.pose.heading == 'S')
+        else if(this -> pose.heading == 'S')
         {
-            executor.pose.heading = 'E';
+            this -> pose.heading = 'E';
         }
     }
 
-    void Executorlmpl::TurnRightCommand::executorTurnRight(Executorlmpl & executor)noexcept
+    void Executorlmpl::TurnRight(void)noexcept
     {
-        if(executor.pose.heading == 'E')
+        if(this -> pose.heading == 'E')
         {
-            executor.pose.heading = 'S';
+            this -> pose.heading = 'S';
         }
-        else if(executor.pose.heading == 'W')
+        else if(this -> pose.heading == 'W')
         {
-            executor.pose.heading = 'N';
+            this -> pose.heading = 'N';
         }
-        else if(executor.pose.heading == 'N')
+        else if(this -> pose.heading == 'N')
         {
-            executor.pose.heading = 'E';
+            this -> pose.heading = 'E';
         }
-        else if(executor.pose.heading == 'S')
+        else if(this -> pose.heading == 'S')
         {
-            executor.pose.heading = 'W';
+            this -> pose.heading = 'W';
         }
+    }
+
+    void Executorlmpl::Fast(void)noexcept
+    {
+        this -> fast = !this -> fast;
     }
 }

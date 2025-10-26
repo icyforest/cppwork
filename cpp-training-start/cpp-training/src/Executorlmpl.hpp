@@ -17,37 +17,67 @@ namespace adas
         void Execute(const std::string&command)noexcept override;
         Pose Query(void)const noexcept override;
     
+    public:
+        bool IsFast(void)noexcept
+        {
+            return this -> fast;
+        }
+        void Fast(void)noexcept;
+        void Move(void)noexcept;
+        void TurnLeft(void)noexcept;
+        void TurnRight(void)noexcept;
+
     private:
-        class MoveCommand final
+        class ICommand
         {
             public:
-                void DoOperate(Executorlmpl & executor)noexcept
-                {
-                    executorMove(executor);
-                }
-                void executorMove(Executorlmpl & executor)noexcept;
+                virtual ~ICommand() = default;
+                virtual void DoOperate(Executorlmpl& executor)const noexcept = 0;
         };
-        class TurnLeftCommand final
+        class FastCommand final: public ICommand
         {
             public:
-                void DoOperate(Executorlmpl & executor)noexcept
+                void DoOperate(Executorlmpl & executor)const noexcept override
                 {
-                    executorTurnLeft(executor);
+                    executor.Fast();
                 }
-                void executorTurnLeft(Executorlmpl & executor)noexcept;
         };
-        class TurnRightCommand final
+        class MoveCommand final: public ICommand
         {
             public:
-                void DoOperate(Executorlmpl & executor)noexcept
+                void DoOperate(Executorlmpl & executor)const noexcept override
                 {
-                    executorTurnRight(executor);
+                    if(executor.IsFast()){
+                        executor.Move();
+                    }
+                    executor.Move();
                 }
-                void executorTurnRight(Executorlmpl & executor)noexcept;
+        };
+        class TurnLeftCommand final: public ICommand
+        {
+            public:
+                void DoOperate(Executorlmpl & executor)const noexcept override
+                {
+                    if(executor.IsFast()){
+                        executor.Move();
+                    }
+                    executor.TurnLeft();
+                }
+        };
+        class TurnRightCommand final: public ICommand
+        {
+            public:
+                void DoOperate(Executorlmpl & executor)const noexcept override
+                {
+                    if(executor.IsFast()){
+                        executor.Move();
+                    }
+                    executor.TurnRight();
+                }
         };
 
-    public:
+    private:
         Pose pose;
-        bool isfast;
+        bool fast;
     };
 }
