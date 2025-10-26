@@ -34,6 +34,44 @@ namespace adas
                 this -> pose.y --;
             }
         }
+        if(commands == "L")
+        {
+            if(this -> pose.heading == 'E')
+            {
+                this -> pose.heading = 'N';
+            }
+            if(this -> pose.heading == 'W')
+            {
+                this -> pose.heading = 'S';
+            }
+            if(this -> pose.heading == 'N')
+            {
+                this -> pose.heading = 'W';
+            }
+            if(this -> pose.heading == 'S')
+            {
+                this -> pose.heading = 'E';
+            }
+        }
+        if(commands == "R")
+        {
+            if(this -> pose.heading == 'E')
+            {
+                this -> pose.heading = 'S';
+            }
+            if(this -> pose.heading == 'W')
+            {
+                this -> pose.heading = 'N';
+            }
+            if(this -> pose.heading == 'N')
+            {
+                this -> pose.heading = 'E';
+            }
+            if(this -> pose.heading == 'S')
+            {
+                this -> pose.heading = 'W';
+            }
+        }
     }
 
     Pose Executorlmpl::Query()const noexcept

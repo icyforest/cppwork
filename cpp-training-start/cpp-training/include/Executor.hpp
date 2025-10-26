@@ -16,7 +16,7 @@ namespace adas
     public:
         Executor(void) = default;
         virtual ~Executor(void) = default;
-        Executor(const Executor&) = delete;
+        Executor(const Executor&) = delete;//ban this way to originate
         Executor& operator=(const Executor&) = delete;
 
     public:
