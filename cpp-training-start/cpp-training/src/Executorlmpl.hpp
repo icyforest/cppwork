@@ -17,6 +17,11 @@ namespace adas
         Pose Query(void)const noexcept override;
     
     private:
+        void Move()noexcept;
+        void TurnLeft()noexcept;
+        void TurnRight()noexcept;
+        
+    private:
         Pose pose;
         bool isfast;
     };
