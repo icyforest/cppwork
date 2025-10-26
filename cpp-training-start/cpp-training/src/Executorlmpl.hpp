@@ -1,5 +1,6 @@
 #pragma once
 #include "Executor.hpp"
+#include "PoseHandler.hpp"
 #include<memory>
 namespace adas
 {
@@ -16,18 +17,7 @@ namespace adas
         void Execute(const std::string&command)noexcept override;
         Pose Query(void)const noexcept override;
     
-    public:
-        bool IsFast(void)noexcept
-        {
-            return this -> fast;
-        }
-        void Fast(void)noexcept;
-        void Move(void)noexcept;
-        void TurnLeft(void)noexcept;
-        void TurnRight(void)noexcept;
-
     private:
-        Pose pose;
-        bool fast;
+        PoseHandler posehandler;
     };
 }
