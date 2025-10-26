@@ -1,5 +1,6 @@
 #pragma once
 #include "Executor.hpp"
+#include<memory>
 
 namespace adas
 {
@@ -17,11 +18,35 @@ namespace adas
         Pose Query(void)const noexcept override;
     
     private:
-        void Move()noexcept;
-        void TurnLeft()noexcept;
-        void TurnRight()noexcept;
-        
-    private:
+        class MoveCommand final
+        {
+            public:
+                void DoOperate(Executorlmpl & executor)noexcept
+                {
+                    executorMove(executor);
+                }
+                void executorMove(Executorlmpl & executor)noexcept;
+        };
+        class TurnLeftCommand final
+        {
+            public:
+                void DoOperate(Executorlmpl & executor)noexcept
+                {
+                    executorTurnLeft(executor);
+                }
+                void executorTurnLeft(Executorlmpl & executor)noexcept;
+        };
+        class TurnRightCommand final
+        {
+            public:
+                void DoOperate(Executorlmpl & executor)noexcept
+                {
+                    executorTurnRight(executor);
+                }
+                void executorTurnRight(Executorlmpl & executor)noexcept;
+        };
+
+    public:
         Pose pose;
         bool isfast;
     };

@@ -24,27 +24,32 @@ namespace adas
             }
             if(cmd == 'M')
             {
+                std::unique_ptr<MoveCommand> cmder = std::make_unique<MoveCommand>();
                 if(isfast)
                 {    
-                    this -> Move();
+                    cmder -> DoOperate(*this);
                 }
-                this -> Move();
+                cmder -> DoOperate(*this);
             }
             else if(cmd == 'L')
             {
+                std::unique_ptr<MoveCommand> cmder1 = std::make_unique<MoveCommand>();
+                std::unique_ptr<TurnLeftCommand> cmder2 = std::make_unique<TurnLeftCommand>();
                 if(isfast)
                 {    
-                    this -> Move();
+                    cmder1 -> DoOperate(*this);
                 }
-                this -> TurnLeft();
+                cmder2 -> DoOperate(*this);
             }
             else if(cmd == 'R')
             {
+                std::unique_ptr<MoveCommand> cmder1 = std::make_unique<MoveCommand>();
+                std::unique_ptr<TurnRightCommand> cmder2 = std::make_unique<TurnRightCommand>();
                 if(isfast)
                 {    
-                    this -> Move();
+                    cmder1 -> DoOperate(*this);
                 }
-                this -> TurnRight();
+                cmder2 -> DoOperate(*this);
             }
         }
     }
@@ -54,63 +59,63 @@ namespace adas
         return pose;
     }
 
-    void Executorlmpl::Move()noexcept
+    void Executorlmpl::MoveCommand::executorMove(Executorlmpl & executor)noexcept
     {
-        if(this -> pose.heading == 'E')
+        if(executor.pose.heading == 'E')
         {
-             this -> pose.x += 1;
+             executor.pose.x += 1;
         }
-        else if(this -> pose.heading == 'W')
+        else if(executor.pose.heading == 'W')
         {
-            this -> pose.x --;
+            executor.pose.x --;
         }
-        else if(this -> pose.heading == 'N')
+        else if(executor.pose.heading == 'N')
         {
-            this -> pose.y ++;
+            executor.pose.y ++;
         }
-        else if(this -> pose.heading == 'S')
+        else if(executor.pose.heading == 'S')
         {
-            this -> pose.y --;
+            executor.pose.y --;
         }
     }
 
-    void Executorlmpl::TurnLeft()noexcept
+    void Executorlmpl::TurnLeftCommand::executorTurnLeft(Executorlmpl & executor)noexcept
     {
-        if(this -> pose.heading == 'E')
+        if(executor.pose.heading == 'E')
         {
-            this -> pose.heading = 'N';
+            executor.pose.heading = 'N';
         }
-        else if(this -> pose.heading == 'W')
+        else if(executor.pose.heading == 'W')
         {
-            this -> pose.heading = 'S';
+            executor.pose.heading = 'S';
         }
-        else if(this -> pose.heading == 'N')
+        else if(executor.pose.heading == 'N')
         {
-            this -> pose.heading = 'W';
+            executor.pose.heading = 'W';
         }
-        else if(this -> pose.heading == 'S')
+        else if(executor.pose.heading == 'S')
         {
-            this -> pose.heading = 'E';
+            executor.pose.heading = 'E';
         }
     }
 
-    void Executorlmpl::TurnRight()noexcept
+    void Executorlmpl::TurnRightCommand::executorTurnRight(Executorlmpl & executor)noexcept
     {
-        if(this -> pose.heading == 'E')
+        if(executor.pose.heading == 'E')
         {
-            this -> pose.heading = 'S';
+            executor.pose.heading = 'S';
         }
-        else if(this -> pose.heading == 'W')
+        else if(executor.pose.heading == 'W')
         {
-            this -> pose.heading = 'N';
+            executor.pose.heading = 'N';
         }
-        else if(this -> pose.heading == 'N')
+        else if(executor.pose.heading == 'N')
         {
-            this -> pose.heading = 'E';
+            executor.pose.heading = 'E';
         }
-        else if(this -> pose.heading == 'S')
+        else if(executor.pose.heading == 'S')
         {
-            this -> pose.heading = 'W';
+            executor.pose.heading = 'W';
         }
     }
 }
