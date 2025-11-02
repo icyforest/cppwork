@@ -1,52 +1,47 @@
 #pragma once
 #include "PoseHandler.hpp"
+#include <functional>
 namespace adas
 {
-    class ICommand
+    class FastCommand final
         {
             public:
-                virtual ~ICommand() = default;
-                virtual void DoOperate(PoseHandler& executor)const noexcept = 0;
-        };
-    class FastCommand final: public ICommand
-        {
-            public:
-                void DoOperate(PoseHandler& executor)const noexcept override
+                const std::function<void(PoseHandler& poseHandler)> operate = [](PoseHandler& poseHandler) noexcept
                 {
-                    executor.Fast();
-                }
+                    poseHandler.Fast();
+                };
         };
-    class MoveCommand final: public ICommand
+    class MoveCommand final
         {
             public:
-                void DoOperate(PoseHandler& executor)const noexcept override
+                const std::function<void(PoseHandler& poseHandler)> operate = [](PoseHandler& poseHandler) noexcept
                 {
-                    if(executor.IsFast()){
-                        executor.Move();
+                    if(poseHandler.IsFast()){
+                        poseHandler.Move();
                     }
-                    executor.Move();
-                }
+                    poseHandler.Move();
+                };
         };
-    class TurnLeftCommand final: public ICommand
+    class TurnLeftCommand final
         {
             public:
-                void DoOperate(PoseHandler& executor)const noexcept override
+                const std::function<void(PoseHandler& poseHandler)> operate = [](PoseHandler& poseHandler) noexcept
                 {
-                    if(executor.IsFast()){
-                        executor.Move();
+                    if(poseHandler.IsFast()){
+                        poseHandler.Move();
                     }
-                    executor.TurnLeft();
-                }
+                    poseHandler.TurnLeft();
+                };
         };
-    class TurnRightCommand final: public ICommand
+    class TurnRightCommand final
         {
             public:
-                void DoOperate(PoseHandler& executor)const noexcept override
+                const std::function<void(PoseHandler& poseHandler)> operate = [](PoseHandler& poseHandler) noexcept
                 {
-                    if(executor.IsFast()){
-                        executor.Move();
+                    if(poseHandler.IsFast()){
+                        poseHandler.Move();
                     }
-                    executor.TurnRight();
-                }
+                    poseHandler.TurnRight();
+                };
         };
 }
