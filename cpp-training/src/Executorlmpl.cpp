@@ -19,7 +19,8 @@ namespace adas
             {'M', MoveCommand()},
             {'L', TurnLeftCommand()},
             {'R', TurnRightCommand()},
-            {'F', FastCommand()}
+            {'F', FastCommand()},
+            {'B', ReverseCommand()}
         };
 
         for (const auto cmd : commands) {
