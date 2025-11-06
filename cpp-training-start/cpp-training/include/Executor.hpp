@@ -12,6 +12,8 @@ namespace adas
     {
     public:
         static Executor* NewExecutor(const Pose& pose = {0,0,'N'})noexcept;
+        static Executor* NewExecutorBus(const Pose& pose = {0,0,'N'})noexcept;
+        static Executor* NewExecutorCar(const Pose& pose = {0,0,'N'})noexcept;
 
     public:
         Executor(void) = default;

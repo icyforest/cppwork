@@ -64,7 +64,7 @@ namespace adas
        ASSERT_EQ(target,executor->Query());
     }
 
-    TEST(ExecutorFTest,should_return_facing_W_and_y_plus_1_given_command_is_FL_and_facing_is_N)
+    TEST(ExecutorFastTest,should_return_facing_W_and_y_plus_1_given_command_is_FL_and_facing_is_N)
     {
        std::unique_ptr<Executor>executor(Executor::NewExecutor({0,0,'N'}));
 
