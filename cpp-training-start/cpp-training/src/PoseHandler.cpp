@@ -9,11 +9,11 @@ PoseHandler::PoseHandler(const Pose& pose) noexcept : pose(pose)
         return pose;
     }
 
-    void PoseHandler::Move(void)noexcept
+    void PoseHandler::Forward(void)noexcept
     {
         if(this -> pose.heading == 'E')
         {
-             this -> pose.x += 1;
+            this -> pose.x ++;
         }
         else if(pose.heading == 'W')
         {
@@ -26,6 +26,26 @@ PoseHandler::PoseHandler(const Pose& pose) noexcept : pose(pose)
         else if(this -> pose.heading == 'S')
         {
             this -> pose.y --;
+        }
+    }
+
+    void PoseHandler::Backward(void)noexcept
+    {
+        if(this -> pose.heading == 'E')
+        {
+            this -> pose.x --;
+        }
+        else if(pose.heading == 'W')
+        {
+            this -> pose.x ++;
+        }
+        else if(this -> pose.heading == 'N')
+        {
+            this -> pose.y --;
+        }
+        else if(this -> pose.heading == 'S')
+        {
+            this -> pose.y ++;
         }
     }
 
@@ -72,7 +92,16 @@ PoseHandler::PoseHandler(const Pose& pose) noexcept : pose(pose)
     void PoseHandler::Fast(void)noexcept{
         this -> fast = !this -> fast;
     }
+    
     bool PoseHandler::IsFast(void)const noexcept{
         return this -> fast;
+    }
+
+    void PoseHandler::Reverse(void)noexcept{
+        this -> reverse = !this -> reverse;
+    }
+    
+    bool PoseHandler::IsReverse(void)const noexcept{
+        return this -> reverse;
     }
 }

@@ -18,6 +18,6 @@ namespace adas
         Pose Query(void)const noexcept override;
     
     private:
-        PoseHandler posehandler;
+        PoseHandler poseHandler;
     };
 }
